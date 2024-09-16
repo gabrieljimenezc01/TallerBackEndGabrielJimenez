@@ -1,15 +1,28 @@
 import express from "express";
+import {routerAdopcion} from "./rutas/adopcionRouter.js";
 import {db} from "./database/conexion.js";
-
 
 //Crear instancia de Express
 const app = express();
+
+//Middleware JSON
+app.use(express.json());
+
+//Verificar Conexion Base Datos
+db.authenticate().then(()=>{
+    console.log(`Conexion a Base de datos correcta`);
+}).catch(err=>{
+    console.log(`Conexion a Base de datos incorrecta ${err}`);
+});
 
 
 //Definir Rutas
 app.get('/', (req, res) => {
     res.send('Hola Sitio Principal');
 });
+
+//Llamar rutas de adopcion
+app.use("/adopcion",routerAdopcion);
 
 //Puerto de Servidor
 const PORT=4000;

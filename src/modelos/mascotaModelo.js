@@ -4,33 +4,33 @@ import { db } from "../database/conexion.js";
 
 const mascota = db.define("mascota", {
   id: {
-    type: DataTypes.INTEGER,
+    type: Sequelize.INTEGER,
     allowNull: false,
     autoIncrement: true,
     primaryKey: true
   },
   nombre: {
-    type: DataTypes.STRING,
+    type: Sequelize.STRING,
     allowNull: false,
   },
   especie: {
-    type: DataTypes.ENUM('Perro', 'Gato', 'Otro'),
-    allowNull: false,
+    type: Sequelize.ENUM('Perro', 'Gato', 'Otro'),
+    allowNull: true,
   },
   raza: {
-    type: DataTypes.STRING,
+    type: Sequelize.STRING,
     allowNull: true,
   },
   edad: {
-    type: DataTypes.INTEGER,
+    type: Sequelize.INTEGER,
     allowNull: false,
   },
   descripcion: {
-    type: DataTypes.TEXT,
+    type: Sequelize.TEXT,
     allowNull: true,
   },
   estado_adopcion: {
-    type: DataTypes.ENUM('Disponible', 'Adoptado'),
+    type: Sequelize.ENUM('Disponible', 'Adoptado'),
     defaultValue: 'Disponible',
   },
 });

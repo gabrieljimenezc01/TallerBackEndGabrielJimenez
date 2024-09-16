@@ -1,5 +1,6 @@
 import express from "express";
 import {routerAdopcion} from "./rutas/adopcionRouter.js";
+import { routerMascota } from "./rutas/mascotaRouter.js";
 import {db} from "./database/conexion.js";
 
 //Crear instancia de Express
@@ -23,6 +24,8 @@ app.get('/', (req, res) => {
 
 //Llamar rutas de adopcion
 app.use("/adopcion",routerAdopcion);
+
+app.use("/mascota",routerMascota);
 
 //Puerto de Servidor
 const PORT=4000;

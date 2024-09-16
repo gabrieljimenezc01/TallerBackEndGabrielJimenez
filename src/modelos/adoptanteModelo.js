@@ -4,25 +4,25 @@ import { db } from "../database/conexion.js";
 
 const adoptante = db.define('adoptante', {
     id: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true
       },
     nombre: {
-      type: DataTypes.STRING,
+      type: Sequelize.STRING,
       allowNull: false,
     },
     telefono: {
-      type: DataTypes.STRING,
+      type: Sequelize.STRING,
       allowNull: false,
     },
     email: {
-      type: DataTypes.STRING,
+      type: Sequelize.STRING,
       allowNull: false,
     },
     direccion: {
-      type: DataTypes.TEXT,
+      type: Sequelize.TEXT,
       allowNull: true,
     },
   });

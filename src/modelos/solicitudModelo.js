@@ -6,18 +6,18 @@ import { adoptante } from "./adoptanteModelo.js";
 
 const solicitud = db.define('solicitud', {
     id: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true
       },
     fecha_solicitud: {
-      type: DataTypes.DATEONLY,
+      type: Sequelize.DATEONLY,
       allowNull: false,
-      defaultValue: DataTypes.NOW,
+      defaultValue: Sequelize.NOW,
     },
     estado: {
-      type: DataTypes.ENUM('Pendiente', 'Aprobada', 'Rechazada'),
+      type: Sequelize.ENUM('Pendiente', 'Aprobada', 'Rechazada'),
       defaultValue: 'Pendiente',
     },
   });

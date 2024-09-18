@@ -1,30 +1,35 @@
 import express from "express";
+import { crear, buscar, buscarId, actualizar, eliminar } from "../controladores/solicitudController.js";
 
-const routerAdopcion = express.Router();
+const routerSolicitud = express.Router();
 
-routerAdopcion.get('/', (req, res) => {
-    res.send('Hola Sitio de Adopción');
+routerSolicitud.get('/', (req, res) => {
+    res.send('Hola Sitio de Solicitud de Adopción');
 });
 
-routerAdopcion.post('/crear', (req, res) => {
-    res.send('Crear Adopción');
-    
+routerSolicitud.post('/crear', (req, res) => {
+    //res.send('Crear Adopción');
+    crear(req,res);
 });
 
-routerAdopcion.get('/buscar', (req, res) => {
-    res.send('Buscar Adopción');
+routerSolicitud.get('/buscar', (req, res) => {
+    //res.send('Buscar Adopción');
+    buscar(req,res);
 });
 
-routerAdopcion.get('/buscarId/:id', (req, res) => {
-    res.send('Buscar Adopción');
+routerSolicitud.get('/buscarId/:id', (req, res) => {
+    //res.send('Buscar Adopción');
+    buscarId(req,res);
 });
 
-routerAdopcion.put('/actualizar/:id', (req, res) => {
-    res.send('Actualizar Adopción');
+routerSolicitud.put('/actualizar/:id', (req, res) => {
+    //res.send('Actualizar Adopción');
+    actualizar(req,res);
 });
 
-routerAdopcion.delete('/eliminar/:id', (req, res) => {
-    res.send('Eliminar Adopción');
+routerSolicitud.delete('/eliminar/:id', (req, res) => {
+    //res.send('Eliminar Adopción');
+    eliminar(req,res);
 });
 
-export {routerAdopcion}
+export {routerSolicitud}

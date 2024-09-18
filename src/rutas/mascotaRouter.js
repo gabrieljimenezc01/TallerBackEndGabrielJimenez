@@ -1,5 +1,5 @@
 import express from "express";
-import { crear } from "../controladores/mascotaController.js";
+import { crear, buscar, buscarId, actualizar, eliminar } from "../controladores/mascotaController.js";
 
 const routerMascota = express.Router();
 
@@ -13,19 +13,23 @@ routerMascota.post('/crear', (req, res) => {
 });
 
 routerMascota.get('/buscar', (req, res) => {
-    res.send('Buscar Mascota');
+    //res.send('Buscar Mascota');
+    buscar(req,res);
 });
 
 routerMascota.get('/buscarId/:id', (req, res) => {
-    res.send('Buscar Mascota');
+   // res.send('Buscar Mascota');
+   buscarId(req,res);
 });
 
 routerMascota.put('/actualizar/:id', (req, res) => {
-    res.send('Actualizar Mascota');
+    //res.send('Actualizar Mascota');
+    actualizar(req,res);
 });
 
 routerMascota.delete('/eliminar/:id', (req, res) => {
-    res.send('Eliminar Mascota');
+    //res.send('Eliminar Mascota');
+    eliminar(req,res);
 });
 
 export { routerMascota }

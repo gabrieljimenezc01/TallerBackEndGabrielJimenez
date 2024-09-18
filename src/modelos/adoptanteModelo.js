@@ -15,7 +15,7 @@ const adoptante = db.define('adoptante', {
     },
     telefono: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     email: {
       type: Sequelize.STRING,

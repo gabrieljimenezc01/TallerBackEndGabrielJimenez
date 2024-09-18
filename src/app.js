@@ -1,6 +1,7 @@
 import express from "express";
-import {routerAdopcion} from "./rutas/adopcionRouter.js";
+import {routerSolicitud} from "./rutas/adopcionRouter.js";
 import { routerMascota } from "./rutas/mascotaRouter.js";
+import { routerAdoptante } from "./rutas/adoptanteRouter.js";
 import {db} from "./database/conexion.js";
 
 //Crear instancia de Express
@@ -23,14 +24,16 @@ app.get('/', (req, res) => {
 });
 
 //Llamar rutas de adopcion
-app.use("/adopcion",routerAdopcion);
+app.use("/solicitud",routerSolicitud);
 
 app.use("/mascota",routerMascota);
+
+app.use("/adoptante",routerAdoptante);
 
 //Puerto de Servidor
 const PORT=4000;
 
-db.sync({ force: true }).then(()=>{
+db.sync({force: true}).then(()=>{
     //Abri servicio e iniciar el Servidor
     app.listen(PORT,()=>{
         console.log(`Servidor Inicializado en el puerto ${PORT}`);

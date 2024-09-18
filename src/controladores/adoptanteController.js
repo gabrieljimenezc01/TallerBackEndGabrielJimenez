@@ -1,16 +1,16 @@
-import { mascota } from "../modelos/mascotaModelo.js";
+import { solicitud } from "../modelos/solicitudModelo.js"
 
 //Crear un recurso Mascota
 const crear = (req,res)=>{
 
     //Validar 
-    if(!req.body.nombre){
+    if(!req.body.mascota){
         res.status(400).send({
             mensaje: "El nombre no puede estar vacio."
         });
         return;
     }
-    if(!req.body.edad){
+    if(!req.body.adoptante){
         res.status(400).send({
             mensaje: "La edad no puede estar vacio."
         });
@@ -18,18 +18,18 @@ const crear = (req,res)=>{
     }
 
     const dataset={
-        nombre: req.body.nombre,
-        edad: req.body.edad
+        adoptante: req.body.adoptante,
+        mascota: req.body.mascota
     }
 
     //Usuar Sequelize para crear el recurso en la base de datos
     mascota.create(dataset).then((resultado)=>{
         res.status(200).json({
-            mensaje: "Registro de Mascota Creado con Exito"
+            mensaje: "Registro para Solicitud de Adopción Creado con Exito"
         });
     }).catch((err)=>{
         res.status(500).json({
-            mensaje: `Registro de Mascota No creado ::: ${err}`
+            mensaje: `Registro de Solicitud No creado ::: ${err}`
         });
     });
 
@@ -37,15 +37,16 @@ const crear = (req,res)=>{
 
 //buscar 
 const buscar = (req, res) => {
-    mascota.findAll().then((resultado)=>{
+    solicitud.findAll().then((resultado)=>{
         res.status(200).json({resultado});
     }).catch((err)=> {
         res.status(500).json({
-            mensaje: `No se encontraron registros ::: ${err}`
+            mensaje: `No se encontraron solicitudes ::: ${err}`
         });
     });
 };
 
+//bsucar mascota por id
 const buscarId = (req, res) => {
     const id = req.params.id;
     if(id == null){
@@ -54,11 +55,11 @@ const buscarId = (req, res) => {
         });
         return;
     }else{
-        mascota.findByPk(id).then((resultado)=>{
+        solicitud.findByPk(id).then((resultado)=>{
             res.status(200).json({resultado});
         }).catch((err)=> {
             res.status(500).json({
-                mensaje: `No se encontraron mascota ::: ${err}`
+                mensaje: `No se encontro la solicitud ::: ${err}`
             });
         });
     }
@@ -68,48 +69,52 @@ const buscarId = (req, res) => {
 //actualizar
 const actualizar = (req, res) => {
     const id = req.params.id;
-    if (!req.body.nombre && !req.body.edad) {
+    if (!req.body.adoptante && !req.body.mascota) {
         res.status(400).json({
-            mensaje: `No se encontraron datos para actualizar`
+            mensaje: `No se encontraron datos de solicitud para actualizar`
         });
         return;
     }
-    const nombre = req.body.nombre;
-    const edad = req.body.edad;
+    const adoptante = req.body.adoptante;
+    const mascota = req.body.mascota;
 
-    mascota.update({nombre,edad},{where:{id}}).then((resultado)=> {
+    solicitud.update({adoptante,mascota},{where:{id}}).then((resultado)=> {
         res.status(200).json({
             tipo: 'succes',
-            mensaje: 'registro actualizado'
+            mensaje: 'Solicitud actualizada'
         });
     }).catch((err)=> {
         res.status(200).json({
             tipo: 'error',
-            mensaje: `Error al actualizar registro ::: ${err}`
+            mensaje: `Error al actualizar solicitud ::: ${err}`
         });
     });
 };
 
+//eliminar mascota
 const eliminar = (req, res) => {
     const id = req.params.id;
-    if(id == null){
-        res.status(400).json({
-            mensaje: `El id no puede estar vacio`
+    if (id == null) {
+      res.status(203).json({
+        message: "Debe ingresar un ID!",
+      });
+      return;
+    }
+    //implementing delete function
+    solicitud.destroy({ where: { id: id } })
+      .then((result) => {
+        res.status(200).json({
+            tipo: 'success',
+            mensaje: `Solicitud con id ${id} Eliminado Correctamente`
         });
-        return;
-    }else{
-        mascota.destroy({where:{id: id}}).then((resultado)=>{
-            if (num == 1) {
-                res.status(200).json({ mensaje: "Mascota eliminada con éxito." });
-            } else {
-                res.status(404).json({ mensaje: `No se pudo encontrar la mascota con id=${id}.` });
-            }
-        }).catch((err)=> {
-            res.status(500).json({
-                mensaje: `No se elimino el registro ::: ${err}`
-            });
+      })
+      .catch((err) => {
+        res.status(500).json({
+            tipo: 'error',
+            mensaje: `Error al eliminar Solicitud ::: ${err}`
         });
-    } 
-};
+      });
+  };
+
 
 export { crear, buscar, buscarId, actualizar, eliminar };

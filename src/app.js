@@ -33,7 +33,7 @@ app.use("/adoptante",routerAdoptante);
 //Puerto de Servidor
 const PORT=4000;
 
-db.sync({force: true}).then(()=>{
+db.sync().then(()=>{
     //Abri servicio e iniciar el Servidor
     app.listen(PORT,()=>{
         console.log(`Servidor Inicializado en el puerto ${PORT}`);

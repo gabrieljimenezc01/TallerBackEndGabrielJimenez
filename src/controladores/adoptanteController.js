@@ -1,35 +1,35 @@
-import { solicitud } from "../modelos/solicitudModelo.js"
+import { adoptante } from "../modelos/adoptanteModelo.js"
 
-//Crear un recurso Mascota
+//Crear un recurso Adoptante
 const crear = (req,res)=>{
 
     //Validar 
-    if(!req.body.mascota){
+    if(!req.body.nombre){
         res.status(400).send({
             mensaje: "El nombre no puede estar vacio."
         });
         return;
     }
-    if(!req.body.adoptante){
+    if(!req.body.email){
         res.status(400).send({
-            mensaje: "La edad no puede estar vacio."
+            mensaje: "El email no puede estar vacio."
         });
         return;
     }
 
     const dataset={
-        adoptante: req.body.adoptante,
-        mascota: req.body.mascota
+        nombre: req.body.nombre,
+        email: req.body.email
     }
 
     //Usuar Sequelize para crear el recurso en la base de datos
-    mascota.create(dataset).then((resultado)=>{
+    adoptante.create(dataset).then((resultado)=>{
         res.status(200).json({
-            mensaje: "Registro para Solicitud de Adopción Creado con Exito"
+            mensaje: "Registro de Adoptante Creado con Exito"
         });
     }).catch((err)=>{
         res.status(500).json({
-            mensaje: `Registro de Solicitud No creado ::: ${err}`
+            mensaje: `Registro de adoptante No creado ::: ${err}`
         });
     });
 
@@ -37,16 +37,16 @@ const crear = (req,res)=>{
 
 //buscar 
 const buscar = (req, res) => {
-    solicitud.findAll().then((resultado)=>{
+    adoptante.findAll().then((resultado)=>{
         res.status(200).json({resultado});
     }).catch((err)=> {
         res.status(500).json({
-            mensaje: `No se encontraron solicitudes ::: ${err}`
+            mensaje: `No se encontraron adoptantes ::: ${err}`
         });
     });
 };
 
-//bsucar mascota por id
+//bsucar adoptante por id
 const buscarId = (req, res) => {
     const id = req.params.id;
     if(id == null){
@@ -55,11 +55,11 @@ const buscarId = (req, res) => {
         });
         return;
     }else{
-        solicitud.findByPk(id).then((resultado)=>{
+        adoptante.findByPk(id).then((resultado)=>{
             res.status(200).json({resultado});
         }).catch((err)=> {
             res.status(500).json({
-                mensaje: `No se encontro la solicitud ::: ${err}`
+                mensaje: `No se encontro al adoptante ::: ${err}`
             });
         });
     }
@@ -69,29 +69,29 @@ const buscarId = (req, res) => {
 //actualizar
 const actualizar = (req, res) => {
     const id = req.params.id;
-    if (!req.body.adoptante && !req.body.mascota) {
+    if (!req.body.nombre && !req.body.email) {
         res.status(400).json({
-            mensaje: `No se encontraron datos de solicitud para actualizar`
+            mensaje: `No se encontraron datos de Adoptante para actualizar`
         });
         return;
     }
-    const adoptante = req.body.adoptante;
-    const mascota = req.body.mascota;
+    const nombre = req.body.nombre;
+    const email = req.body.email;
 
-    solicitud.update({adoptante,mascota},{where:{id}}).then((resultado)=> {
+    adoptante.update({nombre,email},{where:{id}}).then((resultado)=> {
         res.status(200).json({
             tipo: 'succes',
-            mensaje: 'Solicitud actualizada'
+            mensaje: 'Adoptante actualizado'
         });
     }).catch((err)=> {
         res.status(200).json({
             tipo: 'error',
-            mensaje: `Error al actualizar solicitud ::: ${err}`
+            mensaje: `Error al actualizar adoptante ::: ${err}`
         });
     });
 };
 
-//eliminar mascota
+//eliminar adoptante
 const eliminar = (req, res) => {
     const id = req.params.id;
     if (id == null) {
@@ -101,17 +101,17 @@ const eliminar = (req, res) => {
       return;
     }
     //implementing delete function
-    solicitud.destroy({ where: { id: id } })
+    adoptante.destroy({ where: { id: id } })
       .then((result) => {
         res.status(200).json({
             tipo: 'success',
-            mensaje: `Solicitud con id ${id} Eliminado Correctamente`
+            mensaje: `Adoptante con id ${id} Eliminado Correctamente`
         });
       })
       .catch((err) => {
         res.status(500).json({
             tipo: 'error',
-            mensaje: `Error al eliminar Solicitud ::: ${err}`
+            mensaje: `Error al eliminar Adoptante ::: ${err}`
         });
       });
   };

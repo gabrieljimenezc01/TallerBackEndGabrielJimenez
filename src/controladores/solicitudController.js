@@ -1,25 +1,25 @@
 import { solicitud } from "../modelos/solicitudModelo.js"
 
-//Crear un recurso Mascota
+//Crear un recurso Solicitud
 const crear = (req,res)=>{
 
     //Validar 
-    if(!req.body.mascota){
+    if(!req.body.mascota_id){
         res.status(400).send({
-            mensaje: "El nombre no puede estar vacio."
+            mensaje: "La id de Mascota no puede estar vacio."
         });
         return;
     }
-    if(!req.body.adoptante){
+    if(!req.body.adoptante_id){
         res.status(400).send({
-            mensaje: "La edad no puede estar vacio."
+            mensaje: "La id de adoptante no puede estar vacio."
         });
         return;
     }
 
     const dataset={
-        adoptante: req.body.adoptante,
-        mascota: req.body.mascota
+        adoptante_id: req.body.adoptante_id,
+        mascota_id: req.body.mascota_id
     }
 
     //Usuar Sequelize para crear el recurso en la base de datos
@@ -46,7 +46,7 @@ const buscar = (req, res) => {
     });
 };
 
-//bsucar mascota por id
+//bsucar Solicitud por id
 const buscarId = (req, res) => {
     const id = req.params.id;
     if(id == null){
@@ -91,7 +91,7 @@ const actualizar = (req, res) => {
     });
 };
 
-//eliminar mascota
+//eliminar Solicitud
 const eliminar = (req, res) => {
     const id = req.params.id;
     if (id == null) {

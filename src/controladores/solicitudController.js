@@ -29,7 +29,7 @@ const crear = (req,res)=>{
         });
     }).catch((err)=>{
         res.status(500).json({
-            mensaje: `Registro de Solicitud No creado ::: ${err}`
+            mensaje:`Registro de Solicitud No creado ::: id del adoptante= ${adoptante_id} e id de la mascota= ${mascota_id} ::: ${err} `
         });
     });
 

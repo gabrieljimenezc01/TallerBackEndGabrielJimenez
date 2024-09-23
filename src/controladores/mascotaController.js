@@ -46,6 +46,7 @@ const buscar = (req, res) => {
     });
 };
 
+//bsucar mascota por id
 const buscarId = (req, res) => {
     const id = req.params.id;
     if(id == null){
@@ -90,26 +91,30 @@ const actualizar = (req, res) => {
     });
 };
 
+//eliminar mascota
 const eliminar = (req, res) => {
     const id = req.params.id;
-    if(id == null){
-        res.status(400).json({
-            mensaje: `El id no puede estar vacio`
+    if (id == null) {
+      res.status(203).json({
+        message: "Debe ingresar un ID!",
+      });
+      return;
+    }
+    //implementing delete function
+    mascota.destroy({ where: { id: id } })
+      .then((result) => {
+        res.status(200).json({
+            tipo: 'success',
+            mensaje: `Registro con id ${id} Eliminado Correctamente`
         });
-        return;
-    }else{
-        mascota.destroy({where:{id: id}}).then((resultado)=>{
-            if (num == 1) {
-                res.status(200).json({ mensaje: "Mascota eliminada con éxito." });
-            } else {
-                res.status(404).json({ mensaje: `No se pudo encontrar la mascota con id=${id}.` });
-            }
-        }).catch((err)=> {
-            res.status(500).json({
-                mensaje: `No se elimino el registro ::: ${err}`
-            });
+      })
+      .catch((err) => {
+        res.status(500).json({
+            tipo: 'error',
+            mensaje: `Error al eliminar Registro ::: ${err}`
         });
-    } 
-};
+      });
+  };
+
 
 export { crear, buscar, buscarId, actualizar, eliminar };
